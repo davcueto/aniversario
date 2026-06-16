@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para mi niña hermosa ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* MEJORA 1: Fondo rosa con un patrón sutil de mini corazones */
+            background-color: #ffe3e3;
+            background-image: radial-gradient(#ffb3c1 20%, transparent 20%),
+                radial-gradient(#ffb3c1 20%, transparent 20%);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Contenedor principal adaptable a móviles */
+        .contenedor-carta {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 340px;
+            margin: 0 auto;
+            z-index: 10;
+            /* MEJORA 3: Animación de flotado suave para que el sobre tenga vida propia */
+            animation: flotar 3s ease-in-out infinite;
+        }
+
+        /* El sobre */
+        .sobre {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background-color: #f1c40f;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        /* Solapa triangular */
+        .sobre::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 170px solid transparent;
+            border-right: 170px solid transparent;
+            border-top: 110px solid #d4ac0d;
+            transform-origin: top;
+            transition: transform 0.5s ease, z-index 0s 0.25s;
+            z-index: 3;
+        }
+
+        /* MEJORA 2: Sticker de corazón sellando el sobre con un latido sutil */
+        .sello-corazon {
+            position: absolute;
+            top: 85px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 32px;
+            z-index: 4;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            animation: latido 1.5s ease-in-out infinite;
+            cursor: pointer;
+            pointer-events: none;
+            /* Deja pasar el click al sobre */
+        }
+
+        .sobre::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 170px solid #f4d03f;
+            border-right: 170px solid #f4d03f;
+            border-bottom: 100px solid #f4d03f;
+            z-index: 2;
+            border-radius: 0 0 10px 10px;
+        }
+
+        @media (max-width: 360px) {
+            .sobre::before {
+                border-left-width: 150px;
+                border-right-width: 150px;
+            }
+
+            .sobre::after {
+                border-left-width: 150px;
+                border-right-width: 150px;
+            }
+        }
+
+        .carta {
+            position: absolute;
+            top: 10px;
+            width: 90%;
+            height: 170px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease, z-index 0s 0.25s;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carta p {
+            font-size: 15px;
+            color: #333;
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+        }
+
+        .carta .corazon {
+            font-size: 22px;
+            color: #e74c3c;
+        }
+
+        .boton-abrir {
+            margin-top: 40px;
+            padding: 14px 0;
+            width: 85%;
+            font-size: 18px;
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s, cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .boton-abrir:hover {
+            background-color: #ff758f;
+        }
+
+        /* Control de animaciones al abrir */
+        .contenedor-carta.abierto .sobre::before {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        /* Oculta el sticker romántico suavemente cuando se abre el sobre */
+        .contenedor-carta.abierto .sello-corazon {
+            opacity: 0;
+            transform: translateX(-50%) scale(0);
+        }
+
+        .contenedor-carta.abierto .carta {
+            transform: translateY(-130px);
+            z-index: 4;
+        }
+
+        /* --- NUEVAS ANIMACIONES DE INICIO --- */
+
+        /* Flotado del sobre entero */
+        @keyframes flotar {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Latido del corazón del sobre */
+        @keyframes latido {
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+
+            50% {
+                transform: translateX(-50%) scale(1.15);
+            }
+
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        /* Lluvia de corazones */
+        .corazon-cae {
+            position: fixed;
+            top: -10%;
+            font-size: 20px;
+            color: #ff4d6d;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: caida linear forwards;
+        }
+
+        @keyframes caida {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor-carta" id="contenedor">
+        <div class="sobre" onclick="manejarAccion()">
+            <div class="sello-corazon">❤️</div>
+        </div>
+
+        <div class="carta">
+            <p>¡Eres la personita más hermosa, especial y única, esa bonita combinación de amor, risas y magia que hace que todo sea mejor!</p>
+            <div class="corazon">💖</div>
+        </div>
+
+        <button class="boton-abrir" id="btnAccion" onclick="manejarAccion()">Abrir carta</button>
+    </div>
+
+    <script>
+        let cartaAbierta = false;
+        let intervaloCorazones = null;
+
+        function manejarAccion() {
+            const contenedor = document.getElementById('contenedor');
+            const boton = document.getElementById('btnAccion');
+
+            if (!cartaAbierta) {
+                // Desactivamos la animación de flotar para que se quede fija al abrirse la carta
+                contenedor.style.animation = 'none';
+
+                contenedor.classList.add('abierto');
+                boton.innerText = 'Ver nuestra galería 📸';
+                boton.style.backgroundColor = '#2ecc71';
+                boton.style.boxShadow = '0 5px 15px rgba(46, 204, 113, 0.4)';
+                cartaAbierta = true;
+
+                iniciarLluviaCorazones();
+            } else {
+                if (intervaloCorazones) clearInterval(intervaloCorazones);
+                window.location.href = 'galeria.html?play=true';
+            }
+        }
+
+        function crearCorazon() {
+            const corazon = document.createElement('div');
+            corazon.classList.add('corazon-cae');
+
+            const tipos = ['❤️', '💖', '💝', '💕', '💗'];
+            corazon.innerText = types = tipos[Math.floor(Math.random() * tipos.length)];
+
+            corazon.style.left = Math.random() * 100 + 'vw';
+            const tamaño = Math.random() * 15 + 15;
+            corazon.style.fontSize = tamaño + 'px';
+
+            const duracion = Math.random() * 3 + 3;
+            corazon.style.animationDuration = duracion + 's';
+            corazon.style.opacity = Math.random() * 0.5 + 0.5;
+
+            document.body.appendChild(corazon);
+
+            setTimeout(() => {
+                corazon.remove();
+            }, duracion * 1000);
+        }
+
+        function iniciarLluviaCorazones() {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(crearCorazon, Math.random() * 500);
+            }
+            intervaloCorazones = setInterval(crearCorazon, 300);
+        }
+    </script>
+
+</body>
+
+</html>
